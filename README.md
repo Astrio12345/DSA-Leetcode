@@ -5,4 +5,4 @@
   - Java
 
 ## Note
-  These are my personal solutions for practice and learning purposes.
+  These are my personal solutions for leetcode practice questions and learning purposes.
