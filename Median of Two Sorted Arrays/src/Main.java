@@ -1,15 +1,30 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main {
-    public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
-
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
+class Solution {
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        if (nums1.length > nums2.length)
+            return findMedianSortedArrays(nums2, nums1);
+        int m = nums1.length;
+        int n = nums2.length;
+        int left = 0, right = m;
+        int halfLen = (m + n + 1) / 2;
+        while (left <= right) {
+            int i = (left + right) / 2;
+            int j = halfLen - i;
+            int maxLeftA = (i == 0) ? Integer.MIN_VALUE : nums1[i - 1];
+            int minRightA = (i == m) ? Integer.MAX_VALUE : nums1[i];
+            int maxLeftB = (j == 0) ? Integer.MIN_VALUE : nums2[j - 1];
+            int minRightB = (j == n) ? Integer.MAX_VALUE : nums2[j];
+            if (maxLeftA <= minRightB && maxLeftB <= minRightA) {
+                if ((m + n) % 2 == 0) {
+                    return ((double)Math.max(maxLeftA, maxLeftB) + Math.min(minRightA, minRightB)) / 2;
+                } else {
+                    return (double)Math.max(maxLeftA, maxLeftB);
+                }
+            } else if (maxLeftA > minRightB) {
+                right = i - 1;
+            } else {
+                left = i + 1;
+            }
         }
+        throw new IllegalArgumentException("Input arrays are not sorted properly.");
     }
 }
